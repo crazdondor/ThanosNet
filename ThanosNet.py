@@ -1,5 +1,14 @@
+import csv
+
+
+
 def main():
-    # initial commit
+    # load .txt file
+    with open('graph.csv') as csvfile:
+        readCSV = csv.reader(csvfile, delimiter=' ')
+        for row in readCSV:
+            # read the boi
+            pass
     print("Welcome to ThanosNet")
     choice = 0
     while choice != 3:
