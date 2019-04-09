@@ -9,7 +9,10 @@ def check_connection(graph):
     user1 = input("Input user 1 name: ")
     user2 = input("Input user 2 name: ")
     val = graph.check_connection(user1, user2)
-    print(val)
+    if val == -1:
+        print('One or both of these users do not exist')
+    else:
+        print(val)
 
 def main():
     graph = Graph()
