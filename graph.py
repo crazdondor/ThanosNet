@@ -4,6 +4,12 @@ class Graph:
         self.users = []
         self.adj_matrix = []
 
+    def get_users(self):
+        return self.users
+
+    def get_adj_matrix(self):
+        return self.adj_matrix
+
     def user_exists(self, user):
         if user in self.users:
             return True

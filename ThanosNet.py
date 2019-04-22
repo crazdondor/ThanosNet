@@ -14,6 +14,62 @@ def check_connection(graph):
     else:
         print(val)
 
+def best_friend_chain(graph):
+    user1 = input("Input your name: ")
+    user2 = input("Input the person's name you want to check: ")
+    visit_or_not = []
+    user_list = graph.get_users()
+    for i in range(len(user_list)):
+        visit_or_not.append('u')
+    
+    current_node = user1
+    path = []
+    path_values = []
+    path.append(current_node)
+    while current_node != user2:
+        # start by marking the current node as visited
+        for i in range(len(user_list)):
+            if user_list[i] == current_node:
+                visit_or_not[i] = 'v'
+        
+        # now, we define neighbors of current node
+        neighbors = []
+        values = []
+        for i in range(len(user_list)):
+            val = graph.check_connection(current_node, user_list[i])
+            if val > 0 and visit_or_not[i] == 'u':
+                neighbors.append(user_list[i])
+                values.append(val)
+
+        # if the node we're looking for is a neighbor, append it to the path and break
+        if user2 in neighbors:
+            val = graph.check_connection(current_node, user2)
+            path_values.append(val)
+            path.append(user2)
+            break
+
+        # find best neighbor to go to
+        greatest_val = 0
+        for i in range(len(neighbors)):
+            if values[i] > greatest_val:
+                greatest_val = values[i]
+        
+        # set current node to best valued node
+        for i in range(len(neighbors)):
+            if greatest_val == values[i]:
+                current_node = neighbors[i]
+                break
+        
+        # append new current node
+        path.append(current_node)
+        path_values.append(greatest_val)
+
+    # print the path
+    for i in range(len(path)-1):
+        print(path[i] + " -> " + str(path_values[i]) + " ->")
+    print(path[len(path)-1])
+                
+
 def main():
     graph = Graph()
     # load .txt file
@@ -37,14 +93,17 @@ def main():
 
     print("Welcome to ThanosNet")
     choice = 0
-    while choice != 3:
+    while choice != 4:
         print()
         print("1) Check if user exists")
         print("2) Check connection between users")
-        print("3) Quit")
+        print("3) Best friend chain between you and another user")
+        print("4) Quit")
         choice = int(input(">  "))
         if choice == 1:
             check_user(graph)
         elif choice == 2:
             check_connection(graph)
+        elif choice == 3:
+            best_friend_chain(graph)
 main()
