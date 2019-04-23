@@ -26,7 +26,13 @@ def best_friend_chain(graph):
     path = []
     path_values = []
     path.append(current_node)
+    max_loops = len(user_list)
+    curr_loop = 0
     while current_node != user2:
+        # if the loop has run more  times than there are vertices, there is no connection, break
+        if  curr_loop > max_loops:
+            path.clear()
+            break
         # start by marking the current node as visited
         for i in range(len(user_list)):
             if user_list[i] == current_node:
@@ -63,11 +69,16 @@ def best_friend_chain(graph):
         # append new current node
         path.append(current_node)
         path_values.append(greatest_val)
+        curr_loop +=  1
 
-    # print the path
-    for i in range(len(path)-1):
-        print(path[i] + " -> " + str(path_values[i]) + " ->")
-    print(path[len(path)-1])
+    # print the path, if there is a  path
+    if (len(path) != 0):
+        for i in range(len(path)-1):
+            print(path[i] + " -> " + str(path_values[i]) + " ->")
+        print(path[len(path)-1])
+    else:
+        print("There is no connection between " + user1 + " and " + user2)
+    
                 
 
 def main():
