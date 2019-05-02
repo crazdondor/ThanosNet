@@ -1,5 +1,10 @@
+# Bennett Falkenberg, Brewer Slack, Quinlan Bingham
+# ThanosNet
+
 import csv
 from graph import Graph
+import time
+import random
 
 def check_user(graph):
     user = input("Input user name: ")
@@ -78,8 +83,54 @@ def best_friend_chain(graph):
         print(path[len(path)-1])
     else:
         print("There is no connection between " + user1 + " and " + user2)
+
+def snap(graph):
+    print("Dread it.")
+    time.sleep(1)
+    print()
+    print("Run from it.")
+    time.sleep(1)
+    print()
+    print("Destiny still arives.")
+    print()
+    time.sleep(1)
     
-                
+    users = graph.users
+
+    users_before = ', '.join(map(str, users)) 
+    print("Population before the snap:", users_before)
+    print()
+    for row in graph.adj_matrix:
+        print(row)
+    time.sleep(1)
+
+    num_to_snap = len(graph.users)/2
+    snap_indices = set()
+    while len(snap_indices) < num_to_snap:
+        snap_indices.add(random.randint(0,len(graph.users) - 1))
+
+    reverse_snap_indices = list(snap_indices)
+    reverse_snap_indices.reverse()
+
+    for index in reverse_snap_indices:
+        graph.adj_matrix.remove(graph.adj_matrix[index])
+
+    for row in graph.adj_matrix:
+        for index in reverse_snap_indices:
+            row.pop(index)
+    
+    print()
+    for index in reverse_snap_indices:
+        time.sleep(1)
+        print(users[index], "has turned into dust")
+        print()
+    
+    for row in graph.adj_matrix:
+        print(row)
+
+
+
+ 
 
 def main():
     graph = Graph()
@@ -102,14 +153,15 @@ def main():
             name2 = row[1]
             graph.add_val(name1, name2, val)
 
-    print("Welcome to ThanosNet")
+    print("Welcome to ThanosNet, spoiler free since March 2019.")
     choice = 0
     while choice != 4:
         print()
         print("1) Check if user exists")
         print("2) Check connection between users")
         print("3) Best friend chain between you and another user")
-        print("4) Quit")
+        print("4) Thanos snaps his fingers")
+        print("5) Quit")
         choice = int(input(">  "))
         if choice == 1:
             check_user(graph)
@@ -117,4 +169,6 @@ def main():
             check_connection(graph)
         elif choice == 3:
             best_friend_chain(graph)
+        elif choice == 4:
+            snap(graph)
 main()
