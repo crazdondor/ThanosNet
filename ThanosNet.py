@@ -155,7 +155,7 @@ def main():
 
     print("Welcome to ThanosNet, spoiler free since March 2019.")
     choice = 0
-    while choice != 4:
+    while choice != 5:
         print()
         print("1) Check if user exists")
         print("2) Check connection between users")
